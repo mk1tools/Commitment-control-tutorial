@@ -1,5 +1,8 @@
 **free
 
+// ESEMPIO CONCORRENZA DI ACCESSO
+// (c) MarkOneTools - www.markonetools.it - 2026
+
 ctl-opt copyright('MarkOneTools')
   decedit('0,')
   indent(' ')
@@ -17,8 +20,8 @@ exec sql
   --  in una unità di work di un altro job non ancora committata
   -- quando nell'altro job l'unità di work viene committata
   --  rileggendo il record vedo i dati aggiornati
-  set option COMMIT = *CS;
-  //set option COMMIT = *CS, CONACC = *CURCMT;
+  //set option COMMIT = *CS;
+  set option COMMIT = *CS, CONACC = *CURCMT;
   //set option COMMIT = *CHG;
   // con *RR o *RS se c'è in sospeso un commit su un altro job non si riesce
   //  a leggere record perché anche questa read tenta di allocarlo

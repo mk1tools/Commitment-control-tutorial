@@ -3,7 +3,7 @@
 // TEST CONTROLLO SINCRONIA SU PROGRAMMI DIVERSI NELLO STESSO STACK DI CHIAMATE
 // (c) MarkOneTools - www.markonetools.it - 2026
 
-// Esempio 8: PGMA viene eseguito in ACTGRP(*NEW) e pgmB in *DFTACTGRP con COMMIT = *CHG
+// Esempio 8: PGMA e PGMB vengono eseguiti in *DFTACTGRP con COMMIT = *CHG
 //            PGMA chiama il PGMB
 //            PGMB esegue un update di un record
 //                 NON esegue commit esplicito e ritorna al chiamante
@@ -16,13 +16,18 @@ ctl-opt copyright('MarkOneTools')
   expropts(*resdecpos)
   extbinint(*yes);
 
-exec sql
-  set option COMMIT = *CHG;
+dcl-f EMPLO01L keyed usage(*update) rename(EMPLOYEE:EMPREC) commit;
+dcl-ds kEmp likerec(EMPREC:*key);
 
-exec sql
-  update EMPLOYEE
-    set BONUS = BONUS + 100
-    where EMPNO = '000020';
+
+kEmp.WORKDEPT = 'B01';
+kEmp.EMPNO = '000020';
+
+chain %kds(kEmp) EMPLO01L;
+if %found();
+  BONUS = BONUS + 100;
+  update EMPREC;
+endif;
 
 *inlr = *on;
 return;

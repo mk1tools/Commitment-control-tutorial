@@ -1,5 +1,8 @@
 **free
 
+// ESEMPIO CONCORRENZA DI ACCESSO
+// (c) MarkOneTools - www.markonetools.it - 2026
+
 ctl-opt copyright('MarkOneTools')
   decedit('0,')
   indent(' ')

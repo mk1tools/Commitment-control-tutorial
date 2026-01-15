@@ -1,6 +1,8 @@
 **free
 
 // TEST CONTROLLO SINCRONIA VS CURSORI SQL
+// (c) MarkOneTools - www.markonetools.it - 2026
+
 // Esempio 1: viene aperto un cursore
 //            Nel ciclo di lettura del cursore vengono eseguite operazione di I/O
 //            che vengono consolidate o ripristinate

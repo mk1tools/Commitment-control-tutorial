@@ -1,6 +1,8 @@
 **free
 
 // TEST CONTROLLO SINCRONIA SU PROGRAMMI DIVERSI NELLO STESSO STACK DI CHIAMATE
+// (c) MarkOneTools - www.markonetools.it - 2026
+
 // Esempio 7: PGMA viene eseguito in ACTGRP(*NEW) e PGMB in ACTGRP(*CALLER) con COMMIT = *CHG
 //            PGMA esegue un update, quindi chiama il PGMB
 //            PGMB esegue un update di un altro record,

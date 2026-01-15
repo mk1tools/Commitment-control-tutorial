@@ -1,6 +1,8 @@
 **free
 
 // TEST ESECUZIONE ROLLBACK ALL'INTERNO DI UN CICLO DI LETTURA DI UN CURSORE
+// (c) MarkOneTools - www.markonetools.it - 2026
+
 // Esempio 1: cursore di aggiornamento
 //            lettura primo record
 //            aggiornamento di un altra tabella

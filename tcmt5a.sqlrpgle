@@ -1,11 +1,13 @@
 **free
 
 // TEST CONTROLLO SINCRONIA SU PROGRAMMI DIVERSI NELLO STESSO STACK DI CHIAMATE
+// (c) MarkOneTools - www.markonetools.it - 2026
+
 // Esempio 5: PGMA viene eseguito in *DFTACTGRP e PGMB in ACTGRP(*NEW) con COMMIT = *CHG
 //            PGMA esegue un update, quindi chiama il PGMB con estensore errore CALLP(E)
 //            PGMB esegue un update di un altro record e prima di eseguire commit
 //                 si interrompe per un'eccezione non prevista,
-//                 quindi ritorna a PGMA che prosegue all'istruzione successiva
+//                 quindi ritorna a PGMA che prosegue all'istruzione successiva
 //            PGMA esegue commit
 
 ctl-opt copyright('MarkOneTools')
