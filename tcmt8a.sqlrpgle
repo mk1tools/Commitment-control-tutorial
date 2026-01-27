@@ -46,6 +46,10 @@ exec sql
     set BONUS = BONUS + 30
     where EMPNO = '000020';
 
+if sqlcode < *zeros;
+  snd-msg 'update rek di pgm A fallita per errore sqlcode: ' + %char(sqlcode);
+endif;
+
 Domanda = 'Confermi modifica EMPLOYEE pgmA? (S/N)';
 dsply Domanda ' ' Risposta;
 
