@@ -3,10 +3,9 @@
 // TEST CONTROLLO SINCRONIA SU PROGRAMMI DIVERSI NELLO STESSO STACK DI CHIAMATE
 // (c) MarkOneTools - www.markonetools.it - 2026
 
-// Esempio 4: PGMA viene eseguito in *DFTACTGRP e PGMB in ACTGRP(*NEW) con COMMIT = *CHG
+// Esempio 3: PGMA viene eseguito in *DFTACTGRP e PGMB in ACTGRP('PGMB') con COMMIT = *CHG
 //            PGMA esegue un update, quindi chiama il PGMB
-//            PGMB esegue un update di un altro record,
-//                 NON esegue commit esplicito e ritorna al chiamante
+//            PGMB esegue un update di un altro record e ritorna al chiamante
 //            PGMA esegue rollback
 
 ctl-opt copyright('MarkOneTools')
@@ -15,7 +14,10 @@ ctl-opt copyright('MarkOneTools')
   option(*nodebugio: *srcstmt: *showcpy: *nounref)
   expropts(*resdecpos)
   extbinint(*yes)
-  actgrp(*new);
+  actgrp('PGMB');
+
+dcl-s Domanda  char(51);
+dcl-s Risposta char(1);
 
 exec sql
   set option COMMIT = *CHG;
@@ -24,6 +26,19 @@ exec sql
   update EMPLOYEE
     set BONUS = BONUS + 100
     where EMPNO = '000020';
+
+// Domanda = 'Confermi modifica EMPLOYEE pgmB? (S/N)';
+// dsply Domanda ' ' Risposta;
+
+// if %upper(Risposta) = 'S';
+//   exec sql
+//     commit;     // consolida anche le modifiche in sospeso del pgmA
+//   snd-msg 'pgm B Commit sqlcode: ' + %char(sqlcode);
+// else;
+//   exec sql
+//     rollback;   // ripristina anche le modifiche in sospeso del pgmA
+//   snd-msg 'pgm B rollback sqlcode: ' + %char(sqlcode);
+// endif;
 
 *inlr = *on;
 return;
