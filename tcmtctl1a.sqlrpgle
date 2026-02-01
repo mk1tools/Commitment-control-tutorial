@@ -14,16 +14,19 @@ dcl-s Domanda char(51);
 dcl-s Risposta char(1);
 
 exec sql
-  //set option COMMIT = *CS;
-  set option COMMIT = *CS, CONACC = *CURCMT;
-  //set option COMMIT = *CHG;
-  //set option COMMIT = *RS, CONACC = *CURCMT;
+  set option COMMIT = *CHG;                    // A
+  //set option COMMIT = *CS;                   // B
+  //set option COMMIT = *CS, CONACC = *CURCMT; // C
+  //set option COMMIT = *RS, CONACC = *CURCMT; // D
+  //set option COMMIT = *RR, CONACC = *CURCMT; // E
 
 exec sql
   update EMPLOYEE
-    set MIDINIT = 'X'
+    set BONUS = BONUS + 10
     where EMPNO = '000010';
 
+  Domanda = 'Ho incrementato il bonus di 10€ per EMPNO 000010';
+  dsply Domanda;
   Domanda = 'Confermi la modifica di EMPLOYEE? (S/N)';
   dsply Domanda ' ' Risposta;
 
