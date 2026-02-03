@@ -1,6 +1,6 @@
 **free
 
-// ESEMPIO CONCORRENZA DI ACCESSO
+// ESEMPIO CONCORRENZA DI ACCESSO CON CURSORE
 // (c) MarkOneTools - www.markonetools.it - 2026
 
 ctl-opt copyright('MarkOneTools')
@@ -25,7 +25,7 @@ exec sql
   declare c1 cursor for
     select EMPNO
       from EMPLOYEE
-      where EMPNO >= '200000'
+      where EMPNO >= '000200'
       order by EMPNO
       for update;
 
@@ -42,7 +42,8 @@ dow *on;
     leave;
   endif;
 
-  Domanda = 'Confermi la cancellazione di ' + o1.EMPNO + '? (S/N)';
+  Domanda = 'Confermare cancellazione di ' + o1.EMPNO + '? (S/N) +
+             E per uscire.';
   dsply Domanda ' ' Risposta;
 
   if %upper(Risposta) = 'S';
@@ -51,6 +52,9 @@ dow *on;
         where current of c1;
     exec sql
       commit;
+  endif;
+  if %upper(Risposta) = 'E';
+    leave;
   endif;
 
 enddo;

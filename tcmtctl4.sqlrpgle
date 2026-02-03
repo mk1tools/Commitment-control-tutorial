@@ -33,10 +33,25 @@ dou %upper(Risposta) <> 'S';
     select LASTNAME
       into :wLastName
       from EMPLOYEE
-      where EMPNO = '200010';
+      where EMPNO = '000200';
 
-    Domanda = 'LASTNAME di 200010 è ' + %trim(wLastName) + '. Rileggo? (S/N)';
+  if sqlcode = 100;
+    clear Risposta;
+    Domanda = 'Impiegato 000200 non trovato. Rileggo? (S/N)';
     dsply Domanda ' ' Risposta;
+  endif;
+  if sqlcode < *zeros;
+    clear Risposta;
+    Domanda = 'Errore lettura rek 000200; sqlcode: ' + %char(sqlcode) + '. Rileggo? (S/N)';
+    dsply Domanda ' ' Risposta;
+  endif;
+
+  if sqlcode = *zeros;
+    clear Risposta;
+    Domanda = 'LASTNAME di 000200 è ' + %trim(wLastName) + '. Rileggo? (S/N)';
+    dsply Domanda ' ' Risposta;
+  endif;
+
 enddo;
 
 // ATTENZIONE con *RR o *RS il record viene allocato anche per le operazioni
