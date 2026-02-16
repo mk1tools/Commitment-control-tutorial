@@ -56,11 +56,7 @@ dow *on;
              ' a ripetizione del ciclo numero ' + %char(i);
     leave;
   endif;
-  if sqlcode = 100;
-    leave;
-  endif;
-  if i = 3;
-    snd-msg 'Ripetizione del ciclo numero ' + %char(i+1);
+  if sqlcode = 100 or i > 6;
     leave;
   endif;
   // elaborazione
@@ -69,16 +65,22 @@ dow *on;
     update EMPLOYEE
       set BONUS = :oEmp.BONUS
       where current of cEmp;
+  snd-msg 'Eseguito update di ' + oEmp.EMPNO;
   // ogni 3 aggiornamenti consolido
   i += 1;
   if %rem(i:3) = *zeros;
     exec sql
       commit hold;
+    snd-msg 'Eseguito commit hold';
   endif;
 enddo;
 
 exec sql
   close cEmp;
+
+exec sql
+  commit hold;
+snd-msg 'Eseguito commit hold';
 
 *inlr = *on;
 return;

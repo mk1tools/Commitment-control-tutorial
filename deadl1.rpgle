@@ -40,34 +40,36 @@ dsply Domanda ' ' Risposta;
 
 open employee;
 
-// allocazione rek 000200
-kEmp.EMPNO = '000200';
+// allocazione rek 000320
+kEmp.EMPNO = '000320';
 chain %kds(kEmp) employee;
 if %found();
   bonus += 10;
-  Domanda = 'Alloco il rek 000200. Avviare DEADL2 in job 2.';
+  update emprec;
+  Domanda = 'Alloco il rek 000320. Avviare DEADL2 in job 2.';
   clear Risposta;
   dsply Domanda ' ' Risposta;
 endif;
 
-// eseguo nel job 2 la call a DEADL2 fino a quando alloca il rek 000210
+// eseguo nel job 2 la call a DEADL2 fino a quando alloca il rek 000330
 
-// tento di allocare il rek 000210
-kEmp.EMPNO = '000210';
+// tento di allocare il rek 000330
+kEmp.EMPNO = '000330';
 chain %kds(kEmp) employee;
 if %error();
-  Domanda = 'Errore lettura 000210. Status: ' + %char(%status(employee));
+  Domanda = 'Errore lettura 000330. Status: ' + %char(%status(employee));
   clear Risposta;
   dsply Domanda ' ' Risposta;
 endif;
 if %found();
   bonus += 10;
-  Domanda = 'Alloco il rek 000210. In DEADL2 proseguo ad allocare 000200.';
+  update emprec;
+  Domanda = 'Alloco il rek 000330. In DEADL2 proseguo ad allocare 000320.';
   clear Risposta;
   dsply Domanda ' ' Risposta;
-  update emprec;
-  commit;
 endif;
+
+commit;
 
 *inlr = *on;
 return;

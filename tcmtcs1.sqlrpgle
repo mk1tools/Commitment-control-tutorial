@@ -65,11 +65,13 @@ dow *on;
     update EMPLOYEE
       set BONUS = :oEmp.BONUS
       where current of cEmp;
+  snd-msg 'Eseguito update di ' + oEmp.EMPNO;
   // ogni 3 aggiornamenti consolido
   i += 1;
   if %rem(i:3) = *zeros;
     exec sql
       commit;
+    snd-msg 'Eseguito commit';
   endif;
 enddo;
 
